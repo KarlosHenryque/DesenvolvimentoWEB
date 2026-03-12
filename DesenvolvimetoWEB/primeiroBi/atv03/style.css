@@ -1,0 +1,137 @@
+:root {
+    --cor-principal: #f4f6f8;
+    --cor-segundaria: #8eb95d;
+    --cor-texto: #333;
+    --cor-texto-secundaria: #FFFFFF;
+    --cor-texto-selecionado: #f7cc7e;
+    --cor-borda: #ddd;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--cor-principal);
+    color:  var(--cor-texto);
+    line-height: 1.6;
+}
+
+header {
+    background-color: var(--cor-segundaria);
+    color: var(--cor-texto-secundaria);
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 40px;
+}
+
+nav ul {
+    list-style: none;
+    margin-top: 10px;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--cor-texto-secundaria);
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: var(--cor-texto-selecionado);
+    text-decoration: underline;
+}
+
+main {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+article {
+    background-color: var(--cor-texto-secundaria);
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 25px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+article h2 {
+    font-size: 32px;
+    color: var(--cor-segundaria);
+    margin-bottom: 15px;
+}
+
+article p {
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+figure img {
+    width: 100%;
+    border-radius: 6px;
+    margin-top: 10px;
+}
+
+figcaption {
+    font-size: 14px;
+    color: #666;
+    margin-top: 5px;
+}
+
+aside{
+    background-color: var(--cor-texto-secundaria);
+    max-width: 700px;
+    margin: 30px auto;
+    padding: 20px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+aside h3{
+    color: var(--cor-segundaria);
+    margin-bottom: 15px;
+    font-size: 25px;
+}
+
+aside ul{
+    list-style: none;
+}
+
+aside li{
+    margin-bottom: 10px;
+}
+
+aside a{
+    text-decoration: none;
+    color: var(--cor-texto);
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+aside a:hover{
+    color: var(--cor-segundaria);
+    padding-left: 5px; 
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: var(--cor-segundaria);
+    color: var(--cor-texto-secundaria);
+    margin-top: 40px;
+}
