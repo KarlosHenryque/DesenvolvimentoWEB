@@ -1,0 +1,31 @@
+article {
+    grid-area: article;
+    background-color: var(--cor-texto-secundaria);
+    padding: 25px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+article h2 {
+    font-size: 32px;
+    color: var(--cor-segundaria);
+    margin-bottom: 15px;
+}
+
+article p {
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+figure img {
+    width: 100%;
+    border-radius: 6px;
+    margin-top: 10px;
+}
+
+figcaption {
+    font-size: 14px;
+    color: #666;
+    margin-top: 5px;
+}

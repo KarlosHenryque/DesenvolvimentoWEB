@@ -1,0 +1,7 @@
+footer {
+    grid-area: footer;
+    text-align: center;
+    padding: 20px;
+    background-color: var(--cor-segundaria);
+    color: var(--cor-texto-secundaria);
+}

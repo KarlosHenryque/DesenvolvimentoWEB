@@ -1,0 +1,12 @@
+header {
+    grid-area: header;
+    background-color: var(--cor-segundaria);
+    color: var(--cor-texto-secundaria);
+    padding: 10px;
+    text-align: center;
+}
+
+header h1 {
+    margin-top: 10px;
+    font-size: 40px;
+}
