@@ -1,0 +1,35 @@
+aside {
+    grid-area: aside;
+    background-color: var(--cor-texto-secundaria);
+    padding: 20px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    border-left: 4px solid var(--cor-segundaria);
+}
+
+aside h3 {
+    color: var(--cor-segundaria);
+    margin-bottom: 15px;
+    font-size: 25px;
+}
+
+aside ul {
+    list-style: none;
+}
+
+aside li {
+    margin-bottom: 10px;
+}
+
+aside a {
+    text-decoration: none;
+    color: var(--cor-texto);
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+aside a:hover {
+    color: var(--cor-segundaria);
+    padding-left: 5px;
+}

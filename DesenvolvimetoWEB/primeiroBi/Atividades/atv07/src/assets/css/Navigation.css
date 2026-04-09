@@ -1,0 +1,29 @@
+nav {
+    background-color: var(--cor-segundaria);
+    padding: 10px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -10px;
+    margin-bottom: 10px;
+    gap: 30px;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--cor-texto-secundaria);
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: var(--cor-texto-selecionado);
+    text-decoration: underline;
+}
