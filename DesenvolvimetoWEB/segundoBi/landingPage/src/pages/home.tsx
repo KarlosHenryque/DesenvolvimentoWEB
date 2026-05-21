@@ -1,16 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import HeroRectangleOne from "../assets/images/rectangleOne.png";
 import HeroRectangleTwo from "../assets/images/rectangleTwo.png";
 import Logo from "../assets/logo.svg";
 import Button from "../components/Button";
 import Close from "../assets/close.svg";
 import Menu from "../assets/menu.svg";
+import Champion from "../assets/champion.svg";
 import "../styles/header.css";
 import "../styles/hero.css";
 import "../styles/utility.css";
+import "../styles/solution.css";
 
 export default function Home() {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
+
+  useEffect(() => {
+      const html = document.querySelector("html");
+      if (html) {
+          html.style.overflow = showMobileMenu ? "hidden" : "auto";
+      }
+  }, [showMobileMenu]);
 
   return (
     <>
@@ -56,7 +65,8 @@ export default function Home() {
                       <a href="#">Home</a>
                     </li>
                     <li>
-                      <a href="#solution">Soluções</a>
+                        <a onClick={() => setShowMobileMenu(!showMobileMenu)}
+                            href="#solution">Soluções</a>
                     </li>
                     <li>
                       <a href="#testimonials">Depoimentos</a>
@@ -120,6 +130,44 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <section className="container" id="solution">
+        <header>
+            <span>
+                <h2>Soluções</h2>
+                <span className="desktop-only">
+                    <h2>
+                        Sob medida para você
+                    </h2>
+                </span>
+            </span>
+            <p>
+                Inovação é com a gente! A <strong>DonaFrost </strong>
+                já conquistou diversos clientes, seja você mais um deles,
+                veja tudo que pode ganhar com nossos serviços.
+            </p>
+        </header>
+
+        <section className="even-columns">
+          <div className="card">
+              <span>
+                  <img src={Champion} alt="ícone campeão" width={64} height={64} />
+              </span>
+              <div>
+                  <h3>
+                      Produto Vencedor
+                  </h3>
+                  <p>
+                      Ideia matadora, nosso time já ganhou diversos eventos de inovação com nosso produto, entre eles podemos citar o CityFarm da FAG e Startup Garage.
+                  </p>
+                  <hr />
+              </div>
+          </div>
+      </section>
+    
+      </section>
+
+     
     </>
   );
 }
