@@ -1,0 +1,130 @@
+.planos {
+  padding: 7rem 2rem;
+  background: var(--bg-soft);
+}
+
+.planos__header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.planos__header span {
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+
+  color: var(--text-secondary);
+}
+
+.planos__header h2 {
+  margin-top: 1rem;
+
+  font-size: 2.8rem;
+
+  color: var(--text-main);
+}
+
+.planos__grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.planos__card {
+  position: relative;
+  padding: 3rem 2rem;
+  background: var(--bg-main);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-sm);
+}
+
+.planos__card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-md);
+}
+
+.planos__card.ativo {
+  background: var(--bg-secondary);
+  border: 1px solid var(--text-main);
+  transform: scale(1.03);
+}
+
+.planos__badge {
+  position: absolute;
+  top: 18px;
+  right: -30px;
+  background: var(--text-main);
+  color: var(--bg-main);
+  padding: 0.4rem 2.5rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  transform: rotate(45deg);
+}
+
+.planos__card h3 {
+  font-size: 1.4rem;
+  color: var(--text-main);
+}
+
+.planos__preco {
+  margin-top: 1rem;
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--text-main);
+}
+
+.planos__preco span {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: var(--text-secondary);
+}
+
+.planos__card ul {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+}
+
+.planos__card ul li {
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.planos__card button {
+  margin-top: auto;
+  margin-top: 2.5rem;
+  padding: 1rem;
+  border: none;
+  border-radius: 8px;
+  background: var(--text-main);
+  color: var(--bg-main);
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.planos__card button:hover {
+  opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+  .planos {
+    padding: 5rem 1.5rem;
+  }
+
+  .planos__header h2 {
+    font-size: 2rem;
+  }
+
+  .planos__card.ativo {
+    transform: scale(1);
+  }
+}
