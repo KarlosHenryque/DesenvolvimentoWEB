@@ -1,6 +1,6 @@
 # exemplo deu um netlify.toml
 [build]
-  base = "segundoBi\landingPageGJ"
+  base = "segundoBi/landingPageGJ"
   command = "npm run build"
   publish = "dist"
   functions = "netlify/functions"
