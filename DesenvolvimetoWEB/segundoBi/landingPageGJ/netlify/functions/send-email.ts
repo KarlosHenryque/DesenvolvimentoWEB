@@ -2,7 +2,9 @@ import type { Handler, HandlerEvent } from "@netlify/functions";
 import nodemailer from "nodemailer";
 
 interface ContactPayload {
+  nome: string;
   email: string;
+  assunto: string;
   message: string;
 }
 
@@ -15,7 +17,8 @@ const corsHeaders = (origin: string) => ({
 });
 
 const handler: Handler = async (event: HandlerEvent) => {
-  const origin = event.headers["origin"] ?? "";
+  const origin = event.headers.origin ?? "";
+
   if (event.httpMethod === "OPTIONS") {
     return {
       statusCode: 204,
@@ -28,76 +31,160 @@ const handler: Handler = async (event: HandlerEvent) => {
     return {
       statusCode: 405,
       headers: corsHeaders(origin),
-      body: JSON.stringify({ error: "Método não permitido." }),
+      body: JSON.stringify({
+        error: "Método não permitido.",
+      }),
     };
   }
 
-    let payload: ContactPayload;
+  let payload: ContactPayload;
 
   try {
+    console.log("event.body:", event.body);
+
     payload = JSON.parse(event.body ?? "{}");
-  } catch {
-	    return {
+
+    console.log("payload:", payload);
+  } catch (error) {
+    console.error("Erro ao converter JSON:", error);
+
+    return {
       statusCode: 400,
       headers: corsHeaders(origin),
-      body: JSON.stringify({ error: "Body inválido." }),
+      body: JSON.stringify({
+        error: "Body inválido.",
+      }),
     };
   }
 
-  const { email, message } = payload;
+  const { nome, email, assunto, message } = payload
 
-  if (!email?.trim() || !message?.trim()) {
+  if (!nome?.trim() || !email?.trim() || !assunto?.trim() || !message?.trim()) {
     return {
       statusCode: 422,
       headers: corsHeaders(origin),
-      body: JSON.stringify({ error: "Campos obrigatórios: email, message." }),
+      body: JSON.stringify({
+        error: "Campos obrigatórios: nome, email, assunto e message.",
+      }),
     };
   }
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
   if (!emailRegex.test(email)) {
     return {
       statusCode: 422,
       headers: corsHeaders(origin),
-      body: JSON.stringify({ error: "E-mail inválido." }),
+      body: JSON.stringify({
+        error: "E-mail inválido.",
+      }),
     };
   }
-    const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: Number(process.env.SMTP_PORT ?? 587),
-    secure: process.env.SMTP_SECURE === "true",
+
+  const {
+    SMTP_HOST,
+    SMTP_PORT,
+    SMTP_SECURE,
+    SMTP_USER,
+    SMTP_PASS,
+    CONTACT_EMAIL,
+  } = process.env;
+
+  if (
+    !SMTP_HOST ||
+    !SMTP_USER ||
+    !SMTP_PASS ||
+    !CONTACT_EMAIL
+  ) {
+    console.error("Configuração SMTP incompleta.");
+
+    return {
+      statusCode: 500,
+      headers: corsHeaders(origin),
+      body: JSON.stringify({
+        error: "Configuração SMTP incompleta.",
+      }),
+    };
+  }
+
+  const safeMessage = message
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/\n/g, "<br>");
+
+  const transporter = nodemailer.createTransport({
+    host: SMTP_HOST,
+    port: Number(SMTP_PORT ?? 587),
+    secure: SMTP_SECURE === "true",
     auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASS,
+      user: SMTP_USER,
+      pass: SMTP_PASS,
     },
   });
 
-    try {
+  try {
+    await transporter.verify();
+
     await transporter.sendMail({
-      from: `<${process.env.SMTP_USER}>`,
-      replyTo: email,
-      to: process.env.CONTACT_EMAIL,
-      subject: "[Dona Frost] Nova mensagem Landing Page",
-      text: message,
+  from: `Landing Page <${SMTP_USER}>`,
+  replyTo: email,
+  to: CONTACT_EMAIL,
+
+  subject: `[Gabriel José] ${assunto}`,
+
+  text: `
+    Nome: ${nome}
+    E-mail: ${email}
+    Assunto: ${assunto}
+
+    Mensagem:
+    ${message}
+      `,
+
       html: `
         <h2>Nova mensagem de contato</h2>
-        <p><strong>E-mail:</strong> ${email}</p>
-        <p><strong>Mensagem:</strong></p>
-        <p>${message.replace(/\n/g, "<br>")}</p>
+
+        <p>
+          <strong>Nome:</strong>
+          ${nome}
+        </p>
+
+        <p>
+          <strong>E-mail:</strong>
+          ${email}
+        </p>
+
+        <p>
+          <strong>Assunto:</strong>
+          ${assunto}
+        </p>
+
+        <p>
+          <strong>Mensagem:</strong>
+        </p>
+
+        <p>${safeMessage}</p>
       `,
     });
 
     return {
       statusCode: 200,
       headers: corsHeaders(origin),
-      body: JSON.stringify({ message: "E-mail enviado com sucesso." }),
+      body: JSON.stringify({
+        message: "E-mail enviado com sucesso.",
+      }),
     };
   } catch (error) {
-    console.error("Erro ao enviar e-mail:", error);
+    console.error("Erro SMTP:", error);
+
     return {
       statusCode: 500,
       headers: corsHeaders(origin),
-      body: JSON.stringify({ error: "Falha ao enviar o e-mail. Tente novamente mais tarde." }),
+      body: JSON.stringify({
+        error:
+          "Falha ao enviar o e-mail. Tente novamente mais tarde.",
+      }),
     };
   }
 };
